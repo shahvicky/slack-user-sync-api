@@ -1,0 +1,28 @@
+version: '2.4'
+
+networks:
+  testsuite:
+    driver: bridge
+
+services:
+  db:
+    image: mysql
+    container_name: mysql
+    restart: always
+    networks:
+      - testsuite
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+      MYSQL_DATABASE: "database"
+    healthcheck:
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - -h
+        - localhost
+      interval: 10s
+      timeout: 5s
+      retries: 10
