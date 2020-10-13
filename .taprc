@@ -1,0 +1,22 @@
+esm: false
+ts: false
+jsx: false
+check-coverage: true
+files:
+- test/endpoint
+coverage-report:
+- text
+- text-summary
+- json
+- html
+no-browser: true
+branches: 50
+lines: 95
+functions: 90
+statements: 95
+reporter: classic
+output-file: .tap
+timeout: 90
+nyc-arg:
+- --exclude=test/
+- --exclude=coverage/

@@ -1,0 +1,26 @@
+version: '2.4'
+
+networks:
+  testsuite:
+    driver: bridge
+
+services:
+  slack-user-sync-api:
+    build:
+      context: ../
+    networks:
+      - testsuite
+    environment:
+      NODE_ENV: test
+      LOGLEVEL: debug
+      LOGPRETTY: 0
+      TEST_SUITE: 1
+      SQL_HOST: mysql
+      SQL_PORT: 3306
+      SQL_DIALECT: mysql
+      SQL_USER: user
+      SQL_DB: database
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c 'npm run test'

@@ -1,0 +1,56 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "API server to handle internal web APIs and external webhooks from slack app",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "pretest": "npm run lint",
+    "generate": "config-doc config/config.js > doc/env.md",
+    "setup:up": "docker-compose -f compose/base.yml -f compose/dev.yml up --build -d",
+    "setup:down": "docker-compose -f compose/base.yml -f compose/dev.yml down -v",
+    "tap": "tap",
+    "test": "npm run tap",
+    "test:integration": "docker-compose -p slack-user-sync-api -f compose/base.yml -f compose/test.yml up --always-recreate-deps --force-recreate --build --exit-code-from slack-user-sync-api --abort-on-container-exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shahvicky/slack-user-sync/tree/main/api"
+  },
+  "author": "Vivek Shah <shahvicky1992@gmail.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "eslintConfig": {
+    "extends": [
+      "logdna"
+    ],
+    "root": true,
+    "ignorePatterns": [
+      "node_modules/",
+      "test/",
+      "coverage/"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^7.11.0",
+    "eslint-config-logdna": "^2.0.0",
+    "supertest": "^5.0.0",
+    "tap": "^14.10.8"
+  },
+  "dependencies": {
+    "@logdna/env-config": "^1.0.1",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-pino-logger": "^5.0.0",
+    "express-validation": "^3.0.6",
+    "helmet": "^4.1.1",
+    "http-status": "^1.4.2",
+    "mysql2": "^2.2.5",
+    "pino": "^6.7.0",
+    "pino-pretty": "^4.3.0",
+    "sequelize": "^6.3.5",
+    "xss-clean": "^0.1.1"
+  }
+}

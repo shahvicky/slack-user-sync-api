@@ -1,0 +1,8 @@
+version: '2.4'
+
+services:
+  slack-user-sync-api:
+    build:
+      context: ../
+    environment:
+      NODE_ENV: production

@@ -1,0 +1,25 @@
+name: Test Suite
+
+on:
+  push:
+    branches:
+      - main
+
+  # Run tests for any PRs.
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Tests
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm run test:integration
