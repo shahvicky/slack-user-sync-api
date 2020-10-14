@@ -23,4 +23,4 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    command: sh -c 'npm run test'
+    command: sh -c 'npm run test:ci'

@@ -2,8 +2,10 @@ esm: false
 ts: false
 jsx: false
 check-coverage: true
+jobs: 1
 files:
 - test/endpoint
+- test/db
 coverage-report:
 - text
 - text-summary
@@ -11,9 +13,9 @@ coverage-report:
 - html
 no-browser: true
 branches: 50
-lines: 95
+lines: 89
 functions: 90
-statements: 95
+statements: 89
 reporter: classic
 output-file: .tap
 timeout: 90

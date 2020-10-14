@@ -4,6 +4,7 @@
   "description": "API server to handle internal web APIs and external webhooks from slack app",
   "main": "index.js",
   "scripts": {
+    "sync": "node tools/table-sync.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "pretest": "npm run lint",
@@ -12,6 +13,7 @@
     "setup:down": "docker-compose -f compose/base.yml -f compose/dev.yml down -v",
     "tap": "tap",
     "test": "npm run tap",
+    "test:ci": "./tools/test-ci.sh",
     "test:integration": "docker-compose -p slack-user-sync-api -f compose/base.yml -f compose/test.yml up --always-recreate-deps --force-recreate --build --exit-code-from slack-user-sync-api --abort-on-container-exit"
   },
   "repository": {
