@@ -58,4 +58,8 @@ module.exports = new Config([
     .string('sql-db')
     .default('database')
     .desc('The sql database name')
+, Config
+    .string('slack-token')
+    .required()
+    .desc('OAuth token to make slack api calls')
 ])
