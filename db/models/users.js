@@ -5,9 +5,14 @@ const {connection: sequelize} = require('./../connection.js')
 
 const Users = sequelize.define('User', {
   userid: {
-    type: DataTypes.UUID
-  , defaultValue: DataTypes.UUIDV1
+    type: DataTypes.STRING
+  , primaryKey: true
   , field: 'user_id'
+  }
+, teamid: {
+    type: DataTypes.STRING
+  , primaryKey: true
+  , field: 'team_id'
   }
 , firstName: {
     type: DataTypes.STRING(60)
@@ -29,6 +34,12 @@ const Users = sequelize.define('User', {
 , image: {
     type: DataTypes.STRING
   , field: 'image'
+  }
+, isDeleted: {
+    type: DataTypes.BOOLEAN
+  , allowNull: false
+  , defaultValue: false
+  , field: 'is_deleted'
   }
 , isOwner: {
     type: DataTypes.BOOLEAN
