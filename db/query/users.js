@@ -36,9 +36,13 @@ async function save(data) {
   }
 }
 
-async function bulkSave(users) {
+async function bulkSave(users, opts) {
+  const options = {
+    validate: true
+  , ...opts
+  }
   try {
-    await UserModel.bulkCreate(users, {validate: true})
+    await UserModel.bulkCreate(users, options)
   } catch (error) {
     const er = new Error('Unable to create users in bulk')
     er.code = 'EUSERBULKSAVE'
