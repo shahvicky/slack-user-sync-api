@@ -20,6 +20,8 @@ test('user query', async (t) => {
   await setup()
 
   const newUser =   {
+    "userid": "u1003",
+    "teamid": "t1003",
     "firstName": "first3",
     "lastName": "last3",
     "email": "first3.last3@gmail.com",
@@ -58,6 +60,8 @@ test('user query', async (t) => {
 
   t.test('user save throws error if user model does not validate', async (tt) => {
     const incorrectUser =   {
+      "userid": "u1003",
+      "teamid": "t1003",
       "firstName": "first3",
       "lastName": "last3",
       "email": "wrong-email-format",
