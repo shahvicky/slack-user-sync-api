@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@logdna/env-config": "^1.0.1",
+    "@slack/web-api": "^5.12.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
