@@ -3,7 +3,7 @@
 const {test, threw} = require('tap')
 const {setup, teardown} = require('../../common/bootstrap.js')
 const {models, users} = require('./../../../db/index.js')
-const validUsers = require('./../../data/valid-users.json')
+const {getValidUser} = require('./../../data/valid-users.js')
 
 async function saveUsers(data) {
   await models.Users.bulkCreate(data)
@@ -19,22 +19,12 @@ test('user query', async (t) => {
 
   await setup()
 
-  const newUser =   {
-    "userid": "u1003",
-    "teamid": "t1003",
-    "firstName": "first3",
-    "lastName": "last3",
-    "email": "first3.last3@gmail.com",
-    "lastUpdated": 1602631704914,
-    "timeZone": "America/Los_Angeles"
-  }
-
   t.test('user get works', async (tt) => {
-    validUsers.push(newUser)
-    await saveUsers(validUsers)
+    const TOTAL_USERS = 3
+    const newUsers = getValidUser(TOTAL_USERS)
+    await saveUsers(newUsers)
     const allUsers = await users.get()
-    tt.equal(allUsers.length, validUsers.length, 'total number of users')
-    tt.match(JSON.stringify(allUsers), 'first3.last3@gmail.com', 'new user also exists')
+    tt.equal(allUsers.length, TOTAL_USERS, 'total number of users')
 
     tt.tearDown(async () => {
       await truncateTable()
@@ -42,6 +32,7 @@ test('user query', async (t) => {
   })
 
   t.test('save user works', async (tt) => {
+    const newUser = getValidUser()
     const user = await users.save(newUser)
     tt.equal(user.email, newUser.email, 'correct user saved')
     tt.tearDown(async () => {
@@ -50,9 +41,11 @@ test('user query', async (t) => {
   })
 
   t.test('bulk create works', async (tt) => {
-    await users.bulkSave(validUsers)
+    const TOTAL_USERS = 3
+    const newUsers = getValidUser(TOTAL_USERS)
+    await users.bulkSave(newUsers)
     const allUsers = await users.get()
-    tt.equal(allUsers.length, validUsers.length, 'bulk save created correct number of users')
+    tt.equal(allUsers.length, newUsers.length, 'bulk save created correct number of users')
     tt.tearDown(async () => {
       await truncateTable()
     })
