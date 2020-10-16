@@ -6,6 +6,7 @@ module.exports = {
   bulkSave
 , get
 , save
+, upsert
 }
 
 async function get() {
@@ -46,6 +47,24 @@ async function bulkSave(users, opts) {
   } catch (error) {
     const er = new Error('Unable to create users in bulk')
     er.code = 'EUSERBULKSAVE'
+    er.meta = {
+      error
+    }
+    throw er
+  }
+}
+
+async function upsert(user, opts) {
+  const options = {
+    validate: true
+  , ...opts
+  }
+  try {
+    const [record, isCreated] = await UserModel.upsert(user, options)
+    return [record, isCreated]
+  } catch (error) {
+    const er = new Error('Unable to insert/update the record')
+    er.code = 'EUSERUPSERT'
     er.meta = {
       error
     }

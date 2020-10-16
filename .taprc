@@ -13,9 +13,9 @@ coverage-report:
 - html
 no-browser: true
 branches: 50
-lines: 89
+lines: 86
 functions: 90
-statements: 89
+statements: 86
 reporter: classic
 output-file: .tap
 timeout: 90
