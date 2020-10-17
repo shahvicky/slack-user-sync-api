@@ -7,8 +7,8 @@ test('http routes', async (t) => {
 
   await setup()
 
-  t.test('GET /api/health-check', async (tt) => {
-    const res = await supertest.get('/api/health-check')
+  t.test('GET /health-check', async (tt) => {
+    const res = await supertest.get('/health-check')
     tt.equal(res.status, 200, '200 status code')
     tt.equal(res.text, 'OK', 'OK response')
   })
@@ -16,7 +16,7 @@ test('http routes', async (t) => {
   t.test('GET /not-found', async (tt) => {
     const res = await supertest.get('/not-found')
     tt.equal(res.status, 404, '404 status code')
-    tt.match(res.text, /not found/ig)
+    tt.match(res.text, 'Cannot GET /not-found', 'endpoint not present')
   })
 
 }).catch(threw)

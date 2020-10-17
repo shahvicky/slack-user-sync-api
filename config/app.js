@@ -1,13 +1,12 @@
 'use strict'
 
 const express = require('express')
+const errorHandler = require('errorhandler')
 const helmet = require('helmet')
 const xss = require('xss-clean')
 const compression = require('compression')
 const cors = require('cors')
-const httpStatus = require('http-status')
 const routes = require('../routes/index.js')
-const ApiError = require('../utils/api-error.js')
 const log = require('./log.js')
 const pino = require('express-pino-logger')({logger: log})
 
@@ -35,13 +34,20 @@ app.use(compression())
 app.use(cors())
 app.options('*', cors())
 
-// api routes
-app.use('/api', routes)
+// mount all routes on /
+app.use('/', routes)
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  const err = new ApiError('API not found', httpStatus.NOT_FOUND)
-  return next(err)
-})
+// error handler, send stacktrace only during development
+if (process.env.NODE_ENV !== 'production') {
+  app.use(errorHandler())
+} else {
+  app.use((err, req, res, next) => {
+    console.log(err)
+    res.status(500).json({
+      success: false
+    , error: err
+    })
+  })
+}
 
 module.exports = app
