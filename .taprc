@@ -14,7 +14,7 @@ coverage-report:
 no-browser: true
 branches: 50
 lines: 86
-functions: 90
+functions: 85
 statements: 86
 reporter: classic
 output-file: .tap
