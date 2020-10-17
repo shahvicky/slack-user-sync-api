@@ -16,6 +16,7 @@ async function getUsers() {
     for (const user of slackUsers.members) {
       const dbUser = transforUser(user)
       if (dbUser) {
+        console.log(dbUser.lastUpdated)
         users.push(dbUser)
       }
     }
@@ -48,7 +49,7 @@ function transforUser(userDoc) {
   , isOwner: userDoc.is_owner
   , isAdmin: userDoc.is_admin
   , isBot: userDoc.is_bot
-  , lastUpdated: userDoc.updated || Date.now() // may be incorrect if updated value is not present
+  , lastUpdated: userDoc.updated * 1000 || Date.now() // may be incorrect if updated value is not present
   , timeZone: userDoc.tz
   }
   return user
