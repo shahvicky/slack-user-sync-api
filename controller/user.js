@@ -73,7 +73,7 @@ const userWebhook = async function(req, res, next) {
     res.send(body.challenge)
     return next()
   }
-  res.send(200)
+  res.status(200).send('OK')
 
   const event = body.event
   const innerEventType = event.type
