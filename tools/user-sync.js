@@ -12,20 +12,17 @@ async function getUsers() {
       err.message = slackUsers.error
       throw err
     }
-    const users = []
     for (const user of slackUsers.members) {
       const dbUser = transforUser(user)
       if (dbUser) {
-        console.log(dbUser.lastUpdated)
-        users.push(dbUser)
+        // create upsert to user table
+        await userApi.upsert(dbUser)
       }
     }
-    // create bulk req to user table
-    await userApi.bulkSave(users)
     log.info('Current users saved to db')
 
   } catch (error) {
-    console.log(error)
+    log.log(error)
     throw error
   }
 }
@@ -55,4 +52,8 @@ function transforUser(userDoc) {
   return user
 }
 
-getUsers()
+if (require.main === module) {
+  getUsers()
+} else {
+  module.exports = getUsers
+}

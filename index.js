@@ -6,6 +6,8 @@ config.validateEnvVars()
 const {connection, sql} = require('./db/index.js')
 const log = require('./config/log.js').child({module: 'index'})
 const app = require('./config/app.js')
+const tableSync = require('./tools/table-sync.js')
+const userSync = require('./tools/user-sync.js')
 
 const serverPort = config.get('server-port')
 
@@ -22,11 +24,15 @@ function start(cb) {
       log.info({
         database: sql.database
       }, 'Connected to sql database')
-
-      server = app.listen(serverPort, () => {
-        log.info('Server listening on port %d', serverPort)
-        cb()
-      })
+      tableSync()
+        .then(() => {
+          log.info('Database tables synced')
+          server = app.listen(serverPort, () => {
+            log.info('Server listening on port %d', serverPort)
+            userSync()
+            cb()
+          })
+        })
     })
 }
 

@@ -1,10 +1,22 @@
 'use strict'
 
 const {models} = require('./../db/index.js')
+const log = require('./../config/log.js')
 
-async function syncTables() {
-  await models.Users.sync()
+function syncTables() {
+  return new Promise((resolve, reject) => {
+    models.Users.sync()
+      .then(() => {
+        resolve()
+      })
+      .catch((err) => {
+        log.error(err)
+      })
+  })
 }
 
-syncTables()
-
+if (require.main === module) {
+  syncTables()
+} else {
+  module.exports = syncTables
+}
