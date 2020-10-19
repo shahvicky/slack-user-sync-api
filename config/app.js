@@ -42,7 +42,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(errorHandler())
 } else {
   app.use((err, req, res, next) => {
-    console.log(err)
+    log.error(err)
     res.status(500).json({
       success: false
     , error: err

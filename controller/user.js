@@ -52,7 +52,6 @@ const get = async function(req, res, next) {
 
 const userWebhook = async function(req, res, next) {
   const body = req.body
-  console.log(req.body)
   const outerEventType = body && body.type
   if (outerEventType === EVENT_TYPE.VERIFICATION) {
     res.send(body.challenge)
