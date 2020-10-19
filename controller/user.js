@@ -11,6 +11,10 @@ const EVENT_TYPE = {
   }
 }
 
+/**
+ * Format the slack user object to save to user table
+ * @param {object} userDoc user object as sent by the slack event
+ */
 const transformUser = function(userDoc) {
   const user = {
     userid: userDoc.id
@@ -33,6 +37,12 @@ const transformUser = function(userDoc) {
   return user
 }
 
+/**
+ * Middleware to get all users stored in the user table
+ * @param {object} req the HTTP request
+ * @param {object} res the HTTP response
+ * @param {*} next method to call the next middleware/route handler
+ */
 const get = async function(req, res, next) {
   try {
     const allUsers = await users.get()
@@ -50,6 +60,12 @@ const get = async function(req, res, next) {
   }
 }
 
+/**
+ * Middleware to handle webhook events from slack
+ * @param {object} req the HTTP request
+ * @param {object} res the HTTP response
+ * @param {*} next method to call the next middleware/route handler
+ */
 const userWebhook = async function(req, res, next) {
   const body = req.body
   const outerEventType = body && body.type

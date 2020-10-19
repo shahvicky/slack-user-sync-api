@@ -4,6 +4,9 @@ const {api: slackApi} = require('./../slack/index.js')
 const {users: userApi} = require('./../db/index.js')
 const log = require('./../config/log.js')
 
+/**
+ * Sync current users from slack during server start
+ */
 async function getUsers() {
   try {
     const slackUsers = await slackApi.user.list()
