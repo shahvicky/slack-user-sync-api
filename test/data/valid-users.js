@@ -9,6 +9,7 @@ function createValidUser() {
     "firstName": faker.name.firstName(),
     "lastName": faker.name.lastName(),
     "email": faker.internet.email(),
+    "image": faker.image.avatar(),
     "lastUpdated": Date.now(),
     "timeZone": "America/Los_Angeles"
   }
