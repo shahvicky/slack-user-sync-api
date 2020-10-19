@@ -4,5 +4,10 @@ services:
   slack-user-sync-api:
     build:
       context: ../
+    ports:
+      - 8000:8000
+    env_file:
+      - $PWD/tools/.env
     environment:
       NODE_ENV: production
+      SERVER_PORT: 8000
